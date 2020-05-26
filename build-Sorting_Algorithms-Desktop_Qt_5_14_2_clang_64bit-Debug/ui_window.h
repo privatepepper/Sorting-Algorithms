@@ -23,7 +23,12 @@ public:
     {
         if (Window->objectName().isEmpty())
             Window->setObjectName(QString::fromUtf8("Window"));
-        Window->resize(800, 600);
+        Window->resize(924, 650);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(Window->sizePolicy().hasHeightForWidth());
+        Window->setSizePolicy(sizePolicy);
 
         retranslateUi(Window);
 

@@ -24,7 +24,7 @@ void QtMaterialIconButtonPrivate::init()
     Q_Q(QtMaterialIconButton);
 
     rippleOverlay  = new QtMaterialRippleOverlay(q->parentWidget());
-    useThemeColors = true;
+    useThemeColors = false;
 
     rippleOverlay->installEventFilter(q);
 
@@ -33,16 +33,19 @@ void QtMaterialIconButtonPrivate::init()
     QSizePolicy policy;
     policy.setWidthForHeight(true);
     q->setSizePolicy(policy);
+
+    MATERIAL_DISABLE_THEME_COLORS
+    update();
 }
 
 void QtMaterialIconButtonPrivate::updateRipple()
 {
-    Q_Q(QtMaterialIconButton);
+   Q_Q(QtMaterialIconButton);
 
-    QRect r(q->rect());
-    r.setSize(QSize(q->width()*2, q->height()*2));
-    r.moveCenter(q->geometry().center());
-    rippleOverlay->setGeometry(r);
+   QRect r(q->rect());
+   r.setSize(QSize(q->width()*2, q->height()*2));
+   r.moveCenter(q->geometry().center());
+   rippleOverlay->setGeometry(r);
 }
 
 /*!
@@ -53,9 +56,9 @@ QtMaterialIconButton::QtMaterialIconButton(const QIcon &icon, QWidget *parent)
     : QAbstractButton(parent),
       d_ptr(new QtMaterialIconButtonPrivate(this))
 {
-    d_func()->init();
+   // d_func()->init();
 
-    setIcon(icon);
+  //  setIcon(icon);
 }
 
 QtMaterialIconButton::~QtMaterialIconButton()
