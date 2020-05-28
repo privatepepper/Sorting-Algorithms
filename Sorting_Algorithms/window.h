@@ -9,6 +9,7 @@
 #include "column_graph.h"
 #include <qtmaterialraisedbutton.h>
 #include <qtmaterialiconbutton.h>
+#include <qtmaterialdialog.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -38,15 +39,22 @@ private:
     QVector < QVector <QGraphicsRectItem*>> cells;
     void initialize_cells();
 
-    void reset_board();
+    void reset_board(int);
 
-    QtMaterialRaisedButton *clear_button;
-    QtMaterialIconButton *generate_button;
+    QtMaterialRaisedButton *clearButton;
+    QtMaterialIconButton *generateButton;
+    QtMaterialIconButton *startButton;
+    QtMaterialDialog *dialog;
 
     bool one_time = true;
 
+    QTimer *timer;
+
 private slots:
-    void on_generate_button_clicked();
-    void on_clear_button_clicked();
+    void generateButton_clicked();
+    void clearButton_clicked();
+    void closeButton_clicked();
+    void startButton_clicked();
+    void update_cells();
 };
 #endif // WINDOW_H

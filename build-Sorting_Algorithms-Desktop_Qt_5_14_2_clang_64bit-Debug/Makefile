@@ -40,7 +40,7 @@ DISTNAME      = Sorting_Algorithms1.0.0
 DISTDIR = /Users/L/Documents/C++/Projects/Sorting-Algorithms/build-Sorting_Algorithms-Desktop_Qt_5_14_2_clang_64bit-Debug/.tmp/Sorting_Algorithms1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.13 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/L/Qt/5.14.2/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/L/Qt/5.14.2/clang_64/lib -L/Users/L/Documents/C++/Projects/Sorting-Algorithms/Sorting_Algorithms/./ -lcomponents -framework QtWidgets -framework QtGui -framework AppKit -framework Metal -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
+LIBS          = $(SUBLIBS) -F/Users/L/Qt/5.14.2/clang_64/lib /Users/L/Documents/C++/Projects/Sorting-Algorithms/Sorting_Algorithms/libcomponents.a -framework QtWidgets -framework QtGui -framework AppKit -framework Metal -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -54,9 +54,11 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../Sorting_Algorithms/column_graph.cpp \
 		../Sorting_Algorithms/main.cpp \
+		../Sorting_Algorithms/testing.cpp \
 		../Sorting_Algorithms/window.cpp moc_window.cpp
 OBJECTS       = column_graph.o \
 		main.o \
+		testing.o \
 		window.o \
 		moc_window.o
 DIST          = /Users/L/Qt/5.14.2/clang_64/mkspecs/features/spec_pre.prf \
@@ -271,6 +273,7 @@ DIST          = /Users/L/Qt/5.14.2/clang_64/mkspecs/features/spec_pre.prf \
 		../Sorting_Algorithms/Sorting_Algorithms.pro ../Sorting_Algorithms/column_graph.h \
 		../Sorting_Algorithms/window.h ../Sorting_Algorithms/column_graph.cpp \
 		../Sorting_Algorithms/main.cpp \
+		../Sorting_Algorithms/testing.cpp \
 		../Sorting_Algorithms/window.cpp
 QMAKE_TARGET  = Sorting_Algorithms
 DESTDIR       = 
@@ -752,7 +755,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /Users/L/Qt/5.14.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Sorting_Algorithms/column_graph.h ../Sorting_Algorithms/window.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Sorting_Algorithms/column_graph.cpp ../Sorting_Algorithms/main.cpp ../Sorting_Algorithms/window.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Sorting_Algorithms/column_graph.cpp ../Sorting_Algorithms/main.cpp ../Sorting_Algorithms/testing.cpp ../Sorting_Algorithms/window.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Sorting_Algorithms/window.ui $(DISTDIR)/
 
 
@@ -1218,6 +1221,8 @@ moc_window.cpp: ../Sorting_Algorithms/window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers/QColor \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers/QIcon \
 		../Sorting_Algorithms/components/qtmaterialiconbutton.h \
+		../Sorting_Algorithms/components/qtmaterialdialog.h \
+		../Sorting_Algorithms/components/lib/qtmaterialoverlaywidget.h \
 		moc_predefs.h \
 		/Users/L/Qt/5.14.2/clang_64/bin/moc
 	/Users/L/Qt/5.14.2/clang_64/bin/moc $(DEFINES) --include /Users/L/Documents/C++/Projects/Sorting-Algorithms/build-Sorting_Algorithms-Desktop_Qt_5_14_2_clang_64bit-Debug/moc_predefs.h -I/Users/L/Qt/5.14.2/clang_64/mkspecs/macx-clang -I/Users/L/Documents/C++/Projects/Sorting-Algorithms/Sorting_Algorithms -I/Users/L/Documents/C++/Projects/Sorting-Algorithms/Sorting_Algorithms/components -I/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers -I/Users/L/Qt/5.14.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.3/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/L/Qt/5.14.2/clang_64/lib ../Sorting_Algorithms/window.h -o moc_window.cpp
@@ -1962,8 +1967,13 @@ main.o: ../Sorting_Algorithms/main.cpp ../Sorting_Algorithms/window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers/QColor \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers/QIcon \
 		../Sorting_Algorithms/components/qtmaterialiconbutton.h \
+		../Sorting_Algorithms/components/qtmaterialdialog.h \
+		../Sorting_Algorithms/components/lib/qtmaterialoverlaywidget.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Sorting_Algorithms/main.cpp
+
+testing.o: ../Sorting_Algorithms/testing.cpp ../Sorting_Algorithms/catch.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o testing.o ../Sorting_Algorithms/testing.cpp
 
 window.o: ../Sorting_Algorithms/window.cpp ../Sorting_Algorithms/window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
@@ -2392,6 +2402,8 @@ window.o: ../Sorting_Algorithms/window.cpp ../Sorting_Algorithms/window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers/QColor \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers/QIcon \
 		../Sorting_Algorithms/components/qtmaterialiconbutton.h \
+		../Sorting_Algorithms/components/qtmaterialdialog.h \
+		../Sorting_Algorithms/components/lib/qtmaterialoverlaywidget.h \
 		ui_window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QLayout \

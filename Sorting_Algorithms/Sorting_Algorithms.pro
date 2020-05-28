@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     column_graph.cpp \
     main.cpp \
+    testing.cpp \
     window.cpp
 
 HEADERS += \
@@ -28,7 +29,7 @@ FORMS += \
     window.ui
 
 INCLUDEPATH += components/
-LIBS += -L$$PWD/./ -lcomponents
+LIBS += $$PWD/libcomponents.a
 
 
 

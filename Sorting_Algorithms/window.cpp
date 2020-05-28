@@ -17,19 +17,22 @@
 #include <qtmaterialdialog.h>
 
 
+#define erase 99
+
+
+
 Window::Window(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Window)
 {
     ui->setupUi(this);
 
-    this->setFixedSize(924, 650);
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
     sizePolicy.setHorizontalStretch(0);
     sizePolicy.setVerticalStretch(0);
     sizePolicy.setHeightForWidth(this->sizePolicy().hasHeightForWidth());
     this->setSizePolicy(sizePolicy);
-    this->setStyleSheet("QWidget {background: black;}");
+    this->setStyleSheet(" background-color: black;");
 
     auto verticalLayout_3 = new QVBoxLayout(this);
 
@@ -64,36 +67,89 @@ Window::Window(QWidget *parent)
     auto Left_spacer = new QSpacerItem(250, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
     bottom_layout->addItem(Left_spacer);
 
-    auto Label_Icon_Layout = new QVBoxLayout();
-    Label_Icon_Layout->setSpacing(0);
+    auto Icons_Layout = new QHBoxLayout();
+    Icons_Layout->setSpacing(1);
 
     QPixmap icon("/Users/L/Documents/Programming files/Icons/dice.png");
-    generate_button = new QtMaterialIconButton(icon, frame);
-    generate_button->setColor(Qt::white);
-    generate_button->setIconSize(QSize(32,32));
-    Label_Icon_Layout->addWidget(generate_button);
-    bottom_layout->addLayout(Label_Icon_Layout);
+    generateButton = new QtMaterialIconButton(icon, frame);
+    generateButton->setColor(Qt::white);
+    generateButton->setIconSize(QSize(32,32));
+    Icons_Layout->addWidget(generateButton);
+
+    QPixmap icon1("/Users/L/Documents/Programming files/Icons/connection.png");
+    startButton = new QtMaterialIconButton(icon1, frame);
+    startButton->setColor(Qt::white);
+    startButton->setIconSize(QSize(32,32));
+    Icons_Layout->addWidget(startButton);
+
+    bottom_layout->addLayout(Icons_Layout);
 
     auto Right_Spacer = new QSpacerItem(400, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
     bottom_layout->addItem(Right_Spacer);
 
-    clear_button = new QtMaterialRaisedButton("Clear", frame);
-    clear_button->setFontSize(11);
-    clear_button->setFixedWidth(150);
-    bottom_layout->addWidget(clear_button);
+    clearButton = new QtMaterialRaisedButton("Clear", frame);
+    clearButton->setFontSize(11);
+    clearButton->setFixedWidth(150);
+    bottom_layout->addWidget(clearButton);
     horizontalLayout_2->addLayout(bottom_layout);
 
     Main_Layout->addWidget(frame);
 
     verticalLayout_3->addLayout(Main_Layout);
 
-  //  auto dialog = new QtMaterialDialog(this);
-  //  dialog->showDialog();
+    dialog = new QtMaterialDialog(this);
+    dialog->setObjectName("dialog");
+    dialog->setStyleSheet("#dialog { background: grey;}");
+
+    QWidget *dialogWidget = new QWidget;
+    dialogWidget->setObjectName("dialogWidget");
+    dialogWidget->setStyleSheet("#dialogWidget { background: grey;}");
+    auto dialogWidgetLayout = new QVBoxLayout;
+    dialogWidgetLayout->setMargin(10);
+    dialogWidgetLayout->setSpacing(10);
+    dialogWidget->setLayout(dialogWidgetLayout);
+
+    auto title_label = new QLabel("Sorting Algorithms");
+    QFont serifFont("Helvetica [Cronyx]", 20, QFont::Bold);
+    title_label->setFont(serifFont);
+    title_label->setObjectName("label");
+    title_label->setStyleSheet("#label{background: grey;}");
+    dialogWidgetLayout->addWidget(title_label);
+    dialogWidgetLayout->setAlignment(title_label, Qt::AlignTop | Qt::AlignCenter);
+
+    auto gif_label = new QLabel();
+    auto mv = new QMovie("/Users/L/Documents/Programming files/Icons/giphy.gif");
+    mv->start();
+    gif_label->setAttribute(Qt::WA_NoSystemBackground);
+    gif_label->setMovie(mv);
+    dialogWidgetLayout->addWidget(gif_label);
+    dialogWidgetLayout->setAlignment(gif_label, Qt::AlignTop | Qt::AlignLeft);
+
+    auto closeButton = new QtMaterialFlatButton("Close");
+    closeButton->setFontSize(12);
+    dialogWidgetLayout->addWidget(closeButton);
+    dialogWidgetLayout->setAlignment(closeButton, Qt::AlignBottom | Qt::AlignCenter);
+    closeButton->setFixedWidth(100);
+    closeButton->setFixedHeight(25);
 
 
-    connect(generate_button, SIGNAL(clicked()), this, SLOT(on_generate_button_clicked()));
+    QVBoxLayout *dialogLayout = new QVBoxLayout;
+    dialogLayout->setMargin(0);
+    dialogLayout->setSpacing(0);
+    dialog->setWindowLayout(dialogLayout);
+    dialogWidget->setMinimumHeight(300);
+    dialogLayout->addWidget(dialogWidget);
+    dialog->showDialog();
 
-    connect(clear_button, SIGNAL(clicked()), this, SLOT(on_clear_button_clicked()));
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(update_cells()));
+
+    connect(generateButton, SIGNAL(clicked()), this, SLOT(generateButton_clicked()));
+    connect(clearButton, SIGNAL(clicked()), this, SLOT(clearButton_clicked()));
+    connect(closeButton, SIGNAL(clicked()), this, SLOT(closeButton_clicked()));
+    connect(startButton, SIGNAL(clicked()), this, SLOT(startButton_clicked()));
+
+
 }
 
 Window::~Window() {
@@ -104,8 +160,8 @@ Window::~Window() {
 void Window::initialize_cells() {
 
     if (cells.size() == 0){
-        height = view->height() / cell_size;
-        width = view->width() / cell_size;
+        height = (view->height() / cell_size);
+        width = (view->width() / cell_size) - 1;
         cells.resize(width * height);
 
         for (int y = 0; y < height; y++){
@@ -118,7 +174,7 @@ void Window::initialize_cells() {
     }
 }
 
-void Window::reset_board() {
+void Window::reset_board(int x) {
 
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
@@ -126,11 +182,13 @@ void Window::reset_board() {
         }
     }
 
-    if (cells.size() != 0)
-        cells.clear();
+    if (x == erase){
+        if (cells.size() != 0)
+            cells.clear();
+    }
 }
 
-void Window::on_generate_button_clicked() {
+void Window::generateButton_clicked() {
 
     if (one_time){
 
@@ -139,22 +197,77 @@ void Window::on_generate_button_clicked() {
         initialize_cells();
         graph.generate_random_columns(height, width);
 
-        for (int x = 1; x < width - 1; x++){
+        for (int x = 1; x < graph.columns.size(); x++){
             int y = height - 1;
-            while (y != graph.columns[x]){
+            int square_counter = 0;
+            while (square_counter != graph.columns[x]){
                 cells[y][x]->setBrush(Qt::blue);
                 cells[y][x]->setPen(Qt::NoPen);
+                square_counter++;
                 y--;
             }
         }
     }
+
 }
 
-void Window::on_clear_button_clicked() {
+void Window::clearButton_clicked() {
 
     one_time = true;
-    reset_board();
+    graph.current_index = 1;
+    graph.checking_right_now = 2;
+    timer->stop();
+    reset_board(erase);
 }
+
+void Window::closeButton_clicked() {
+
+    dialog->hideDialog();
+    dialog->deleteLater();
+
+}
+
+void Window::startButton_clicked() {
+
+    timer->start(1000);
+}
+
+void Window::update_cells() {
+
+    // change color of current col
+    // change color of checking_right_now col
+    // repaint
+    reset_board(0);
+
+    for (int x = 1; x < graph.columns.size(); x++){
+        int y = height - 1;
+        int square_counter = 0;
+        while (square_counter != graph.columns[x]){
+            cells[y][x]->setBrush(Qt::blue);
+            cells[y][x]->setPen(Qt::NoPen);
+            square_counter++;
+            y--;
+        }
+    }
+
+    for (int y = height - 1; y > 0; y--){
+
+        if (cells[y][graph.current_index]->brush() != Qt::blue)
+            break;
+        cells[y][graph.current_index]->setBrush(Qt::green);
+    }
+
+    for (int y = height - 1; y > 0; y--){
+
+        if (cells[y][graph.checking_right_now]->brush() != Qt::blue)
+            break;
+        cells[y][graph.checking_right_now]->setBrush(Qt::red);
+    }
+
+
+   graph.bubble_sort();
+}
+
 
 
 
