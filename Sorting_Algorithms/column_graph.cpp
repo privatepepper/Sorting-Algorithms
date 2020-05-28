@@ -14,25 +14,32 @@ void column_graph::generate_random_columns(int max_value, int width) {
     while (columns.size() != width){
         columns.push_back(qrand() % (max_value - 2) + 1);
     }
-
- //  columns = {0, 50, 40, 30, 20, 10};
-   end = columns.size() - 1;
+    end = columns.size() - 1;
 }
 
-void column_graph::bubble_sort() {
-
-    if (current_index == end){
-        current_index = 1;
-        checking_right_now = 2;
-        end--;
-    }
+bool column_graph::bubble_sort() {
 
     if (columns[current_index] > columns[checking_right_now]){
 
         int temp = columns[current_index];
         columns[current_index] = columns[checking_right_now];
         columns[checking_right_now] = temp;
+        swapped = true;
     }
     current_index++;
     checking_right_now++;
+
+    if (current_index == end){
+
+        current_index = 0;
+        checking_right_now = 1;
+        end--;
+        if (end == 0 || !swapped)
+            return true;
+        swapped = false;
+    }
+
+    return false;
 }
+
+

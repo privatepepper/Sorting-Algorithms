@@ -1540,7 +1540,8 @@ column_graph.o: ../Sorting_Algorithms/column_graph.cpp ../Sorting_Algorithms/col
 		/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers/qtguiversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o column_graph.o ../Sorting_Algorithms/column_graph.cpp
 
-main.o: ../Sorting_Algorithms/main.cpp ../Sorting_Algorithms/window.h \
+main.o: ../Sorting_Algorithms/main.cpp ../Sorting_Algorithms/catch.hpp \
+		../Sorting_Algorithms/window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtCore.framework/Headers/QtCore \
@@ -1972,7 +1973,7 @@ main.o: ../Sorting_Algorithms/main.cpp ../Sorting_Algorithms/window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Sorting_Algorithms/main.cpp
 
-testing.o: ../Sorting_Algorithms/testing.cpp ../Sorting_Algorithms/catch.hpp
+testing.o: ../Sorting_Algorithms/testing.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o testing.o ../Sorting_Algorithms/testing.cpp
 
 window.o: ../Sorting_Algorithms/window.cpp ../Sorting_Algorithms/window.h \

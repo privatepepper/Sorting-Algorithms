@@ -10,6 +10,7 @@
 #include <qtmaterialraisedbutton.h>
 #include <qtmaterialiconbutton.h>
 #include <qtmaterialdialog.h>
+#include <qtmaterialtabs.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -40,11 +41,13 @@ private:
     void initialize_cells();
 
     void reset_board(int);
+    void repaint();
 
     QtMaterialRaisedButton *clearButton;
     QtMaterialIconButton *generateButton;
     QtMaterialIconButton *startButton;
     QtMaterialDialog *dialog;
+    QtMaterialTabs *tabs;
 
     bool one_time = true;
 

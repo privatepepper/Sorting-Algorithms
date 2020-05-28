@@ -1,14 +1,34 @@
-//#define CATCH_CONFIG_MAIN
 //#include "catch.hpp"
+//#include "column_graph.h"
+//#include <vector>
+//#include <QVector>
 
+//std::vector <int> convert(QVector <int> qvec){
 
-//unsigned int Factorial( unsigned int number ) {
-//    return number <= 1 ? number : Factorial(number-1)*number;
+//    std::vector <int> vec;
+//    for (int i = 0; i < qvec.size(); i++){
+//        vec.push_back(qvec[i]);
+//    }
+//    return vec;
 //}
 
-//TEST_CASE( "Factorials are computed", "[factorial]" ) {
-//    REQUIRE( Factorial(1) == 1 );
-//    REQUIRE( Factorial(2) == 2 );
-//    REQUIRE( Factorial(3) == 6 );
-//    REQUIRE( Factorial(10) == 3628800 );
+//std::vector <int> theAnswer(QVector <int> vec)
+//{
+//    column_graph graph;
+//    vec = graph.bubble_sort(vec);
+
+//    return convert(vec);
 //}
+
+//TEST_CASE("Bubble sort", "") {
+
+//    REQUIRE_THAT(theAnswer({}), Catch::Equals<int>({}));
+//    REQUIRE_THAT(theAnswer({1, 2, 3, 4, 5, 6}), Catch::Equals<int>({1, 2, 3, 4, 5, 6}));
+//    REQUIRE_THAT(theAnswer({6, 5, 4, 3, 2, 1}), Catch::Equals<int>({1, 2, 3, 4, 5, 6 }));
+//    REQUIRE_THAT(theAnswer({1}), Catch::Equals<int>({1}));
+//    REQUIRE_THAT(theAnswer({1, 5, 6, 4, 3, 2}), Catch::Equals<int>({1, 2, 3, 4, 5, 6}));
+//}
+
+
+
+

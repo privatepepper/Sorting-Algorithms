@@ -56,7 +56,7 @@ Window::Window(QWidget *parent)
     auto bottom_layout = new QHBoxLayout();
     bottom_layout->setSpacing(0);
 
-    auto tabs = new QtMaterialTabs(frame);
+    tabs = new QtMaterialTabs(frame);
     tabs->addTab("Merge Sort");
     tabs->addTab("Quick Sort");
     tabs->addTab("Heap Sort");
@@ -188,25 +188,28 @@ void Window::reset_board(int x) {
     }
 }
 
+void Window::repaint() {
+
+    for (int x = 0; x < graph.columns.size(); x++){
+        int y = height - 1;
+        int square_counter = 0;
+        while (square_counter != graph.columns[x]){
+            cells[y][x]->setBrush(Qt::blue);
+            cells[y][x]->setPen(Qt::NoPen);
+            square_counter++;
+            y--;
+        }
+    }
+}
+
 void Window::generateButton_clicked() {
 
     if (one_time){
 
         one_time = false;
-
         initialize_cells();
         graph.generate_random_columns(height, width);
-
-        for (int x = 1; x < graph.columns.size(); x++){
-            int y = height - 1;
-            int square_counter = 0;
-            while (square_counter != graph.columns[x]){
-                cells[y][x]->setBrush(Qt::blue);
-                cells[y][x]->setPen(Qt::NoPen);
-                square_counter++;
-                y--;
-            }
-        }
+        repaint();
     }
 
 }
@@ -214,8 +217,8 @@ void Window::generateButton_clicked() {
 void Window::clearButton_clicked() {
 
     one_time = true;
-    graph.current_index = 1;
-    graph.checking_right_now = 2;
+    graph.current_index = 0;
+    graph.checking_right_now = 1;
     timer->stop();
     reset_board(erase);
 }
@@ -229,26 +232,13 @@ void Window::closeButton_clicked() {
 
 void Window::startButton_clicked() {
 
-    timer->start(1000);
+    timer->start(0);
 }
 
 void Window::update_cells() {
 
-    // change color of current col
-    // change color of checking_right_now col
-    // repaint
     reset_board(0);
-
-    for (int x = 1; x < graph.columns.size(); x++){
-        int y = height - 1;
-        int square_counter = 0;
-        while (square_counter != graph.columns[x]){
-            cells[y][x]->setBrush(Qt::blue);
-            cells[y][x]->setPen(Qt::NoPen);
-            square_counter++;
-            y--;
-        }
-    }
+    repaint();
 
     for (int y = height - 1; y > 0; y--){
 
@@ -264,8 +254,22 @@ void Window::update_cells() {
         cells[y][graph.checking_right_now]->setBrush(Qt::red);
     }
 
+    switch (tabs->currentIndex()) {
 
-   graph.bubble_sort();
+        case 0:
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            if (graph.bubble_sort()){
+                timer->stop();
+                repaint();
+            }
+            break;
+    }
+
 }
 
 
