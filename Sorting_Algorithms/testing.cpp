@@ -15,18 +15,19 @@
 //std::vector <int> theAnswer(QVector <int> vec)
 //{
 //    column_graph graph;
-//    vec = graph.bubble_sort(vec);
+//   // vec = graph.partition(0, 3, vec);
+//   // vec = graph.partition(0, 3, vec);
 
+
+
+//   // return {1, 2};
 //    return convert(vec);
 //}
 
 //TEST_CASE("Bubble sort", "") {
 
-//    REQUIRE_THAT(theAnswer({}), Catch::Equals<int>({}));
-//    REQUIRE_THAT(theAnswer({1, 2, 3, 4, 5, 6}), Catch::Equals<int>({1, 2, 3, 4, 5, 6}));
-//    REQUIRE_THAT(theAnswer({6, 5, 4, 3, 2, 1}), Catch::Equals<int>({1, 2, 3, 4, 5, 6 }));
-//    REQUIRE_THAT(theAnswer({1}), Catch::Equals<int>({1}));
-//    REQUIRE_THAT(theAnswer({1, 5, 6, 4, 3, 2}), Catch::Equals<int>({1, 2, 3, 4, 5, 6}));
+//  //  REQUIRE_THAT(theAnswer({10, 16, 8, 12, 15, 6, 3, 9, 5, INT_MAX}), Catch::Equals<int>({6, 5, 8, 9, 3, 10, 15, 12, 16, INT_MAX}));
+// //   REQUIRE_THAT(theAnswer({10, 20, 30, INT_MAX}), Catch::Equals<int>({10, 20, 30, INT_MAX}));
 //}
 
 

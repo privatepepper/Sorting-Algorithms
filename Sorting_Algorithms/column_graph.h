@@ -16,6 +16,19 @@ public:
     int current_index = 0;
     int checking_right_now = 1;
 
+    int quick_sort(int low, int high);
+    int partition(int left_index, int right_index);
+    int right_index = 0;
+    int left_index = 0;
+    int pivot;
+    bool one_time = true;
+    bool decrease_one_time = true;
+    QVector <QPair <int, int> > recursive_saver;
+
+
+    void swap(int &x, int &y);
+    void reset();
+
 private:
 
     int end;

@@ -41,7 +41,7 @@ private:
     void initialize_cells();
 
     void reset_board(int);
-    void repaint();
+    void repaint(int start, int end, QColor color);
 
     QtMaterialRaisedButton *clearButton;
     QtMaterialIconButton *generateButton;
@@ -50,6 +50,8 @@ private:
     QtMaterialTabs *tabs;
 
     bool one_time = true;
+    bool test = true;
+    int count = 0;
 
     QTimer *timer;
 

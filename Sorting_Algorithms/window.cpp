@@ -149,7 +149,6 @@ Window::Window(QWidget *parent)
     connect(closeButton, SIGNAL(clicked()), this, SLOT(closeButton_clicked()));
     connect(startButton, SIGNAL(clicked()), this, SLOT(startButton_clicked()));
 
-
 }
 
 Window::~Window() {
@@ -167,6 +166,7 @@ void Window::initialize_cells() {
         for (int y = 0; y < height; y++){
             for (int x = 0; x < width; x++){
                 auto *cell = new QGraphicsRectItem(x * cell_size, y * cell_size, cell_size, cell_size);
+                cell->setBrush(Qt::black);
                 cells[y].push_back(cell);
                 scene->addItem(cell);
             }
@@ -188,13 +188,13 @@ void Window::reset_board(int x) {
     }
 }
 
-void Window::repaint() {
+void Window::repaint(int start, int end, QColor color) {
 
-    for (int x = 0; x < graph.columns.size(); x++){
+    for (int x = start; x <= end; x++){
         int y = height - 1;
         int square_counter = 0;
         while (square_counter != graph.columns[x]){
-            cells[y][x]->setBrush(Qt::blue);
+            cells[y][x]->setBrush(color);
             cells[y][x]->setPen(Qt::NoPen);
             square_counter++;
             y--;
@@ -209,7 +209,7 @@ void Window::generateButton_clicked() {
         one_time = false;
         initialize_cells();
         graph.generate_random_columns(height, width);
-        repaint();
+        repaint(0, graph.columns.size() - 1, Qt::blue);
     }
 
 }
@@ -217,6 +217,7 @@ void Window::generateButton_clicked() {
 void Window::clearButton_clicked() {
 
     one_time = true;
+    graph.reset();
     graph.current_index = 0;
     graph.checking_right_now = 1;
     timer->stop();
@@ -237,41 +238,67 @@ void Window::startButton_clicked() {
 
 void Window::update_cells() {
 
-    reset_board(0);
-    repaint();
+    // Bubble Sort
+    if (tabs->currentIndex() == 3) {
 
-    for (int y = height - 1; y > 0; y--){
+        reset_board(0);
+        repaint(0, graph.columns.size() - 1, Qt::blue);
 
-        if (cells[y][graph.current_index]->brush() != Qt::blue)
-            break;
-        cells[y][graph.current_index]->setBrush(Qt::green);
+        for (int y = height - 1; y > 0; y--){
+
+            if (cells[y][graph.current_index]->brush() != Qt::blue)
+                break;
+            cells[y][graph.current_index]->setBrush(Qt::green);
+        }
+
+        for (int y = height - 1; y > 0; y--){
+
+            if (cells[y][graph.checking_right_now]->brush() != Qt::blue)
+                break;
+            cells[y][graph.checking_right_now]->setBrush(Qt::red);
+        }
+
+        if (graph.bubble_sort()){
+            timer->stop();
+            repaint(0, graph.columns.size() - 1, Qt::blue);
+        }
     }
 
-    for (int y = height - 1; y > 0; y--){
+    // Quick Sort
+    if (tabs->currentIndex() == 1){
 
-        if (cells[y][graph.checking_right_now]->brush() != Qt::blue)
-            break;
-        cells[y][graph.checking_right_now]->setBrush(Qt::red);
-    }
+        reset_board(0);
+        repaint(0, graph.columns.size() - 1, Qt::blue);
+        repaint(graph.recursive_saver[0].first, graph.recursive_saver[0].second, Qt::yellow);
 
-    switch (tabs->currentIndex()) {
+        if (graph.left_index != -1){
+            for (int y = height - 1; y > 0; y--){
 
-        case 0:
-            break;
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            if (graph.bubble_sort()){
-                timer->stop();
-                repaint();
+                if (cells[y][graph.left_index]->brush() == Qt::black)
+                    break;
+                cells[y][graph.left_index]->setBrush(Qt::green);
             }
-            break;
+        }
+
+        for (int y = height - 1; y > 0; y--){
+
+            if (cells[y][graph.right_index]->brush() == Qt::black)
+                break;
+            cells[y][graph.right_index]->setBrush(Qt::green);
+        }
+
+        if (graph.quick_sort(graph.recursive_saver[0].first, graph.recursive_saver[0].second) == -1){
+
+            if (graph.recursive_saver.size() == 0 || graph.recursive_saver.size() == 1){
+
+                timer->stop();
+                repaint(0, graph.columns.size() - 1, Qt::blue);
+            } else {
+
+                graph.recursive_saver.pop_front();
+                graph.quick_sort(graph.recursive_saver[0].first, graph.recursive_saver[0].second);
+            }
+
+        }
     }
-
 }
-
-
-
-

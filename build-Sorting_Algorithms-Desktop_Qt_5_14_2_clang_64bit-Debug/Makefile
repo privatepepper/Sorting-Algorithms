@@ -1223,6 +1223,7 @@ moc_window.cpp: ../Sorting_Algorithms/window.h \
 		../Sorting_Algorithms/components/qtmaterialiconbutton.h \
 		../Sorting_Algorithms/components/qtmaterialdialog.h \
 		../Sorting_Algorithms/components/lib/qtmaterialoverlaywidget.h \
+		../Sorting_Algorithms/components/qtmaterialtabs.h \
 		moc_predefs.h \
 		/Users/L/Qt/5.14.2/clang_64/bin/moc
 	/Users/L/Qt/5.14.2/clang_64/bin/moc $(DEFINES) --include /Users/L/Documents/C++/Projects/Sorting-Algorithms/build-Sorting_Algorithms-Desktop_Qt_5_14_2_clang_64bit-Debug/moc_predefs.h -I/Users/L/Qt/5.14.2/clang_64/mkspecs/macx-clang -I/Users/L/Documents/C++/Projects/Sorting-Algorithms/Sorting_Algorithms -I/Users/L/Documents/C++/Projects/Sorting-Algorithms/Sorting_Algorithms/components -I/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers -I/Users/L/Qt/5.14.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.3/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/L/Qt/5.14.2/clang_64/lib ../Sorting_Algorithms/window.h -o moc_window.cpp
@@ -1540,8 +1541,7 @@ column_graph.o: ../Sorting_Algorithms/column_graph.cpp ../Sorting_Algorithms/col
 		/Users/L/Qt/5.14.2/clang_64/lib/QtGui.framework/Headers/qtguiversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o column_graph.o ../Sorting_Algorithms/column_graph.cpp
 
-main.o: ../Sorting_Algorithms/main.cpp ../Sorting_Algorithms/catch.hpp \
-		../Sorting_Algorithms/window.h \
+main.o: ../Sorting_Algorithms/main.cpp ../Sorting_Algorithms/window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtCore.framework/Headers/QtCore \
@@ -1970,6 +1970,7 @@ main.o: ../Sorting_Algorithms/main.cpp ../Sorting_Algorithms/catch.hpp \
 		../Sorting_Algorithms/components/qtmaterialiconbutton.h \
 		../Sorting_Algorithms/components/qtmaterialdialog.h \
 		../Sorting_Algorithms/components/lib/qtmaterialoverlaywidget.h \
+		../Sorting_Algorithms/components/qtmaterialtabs.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Sorting_Algorithms/main.cpp
 
@@ -2405,6 +2406,7 @@ window.o: ../Sorting_Algorithms/window.cpp ../Sorting_Algorithms/window.h \
 		../Sorting_Algorithms/components/qtmaterialiconbutton.h \
 		../Sorting_Algorithms/components/qtmaterialdialog.h \
 		../Sorting_Algorithms/components/lib/qtmaterialoverlaywidget.h \
+		../Sorting_Algorithms/components/qtmaterialtabs.h \
 		ui_window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QLayout \
@@ -2412,7 +2414,6 @@ window.o: ../Sorting_Algorithms/window.cpp ../Sorting_Algorithms/window.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
 		../Sorting_Algorithms/components/qtmaterialfab.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QSpacerItem \
-		../Sorting_Algorithms/components/qtmaterialtabs.h \
 		/Users/L/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QFrame
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o ../Sorting_Algorithms/window.cpp
 

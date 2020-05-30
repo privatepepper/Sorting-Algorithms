@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     w.show();
 
     //int result = Catch::Session().run(argc, argv);
-    //return result;
+   // return result;
 
     return a.exec();
 }
